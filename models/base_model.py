@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """BaseModel class Blueprint for all subclasses"""
+import models
 import uuid
 from datetime import datetime
 

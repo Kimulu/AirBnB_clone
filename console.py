@@ -5,7 +5,14 @@ import sys
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
-
+from models import storage
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 class HBNBCommand(cmd.Cmd):
     """ Command interpreter class """
@@ -18,10 +25,19 @@ class HBNBCommand(cmd.Cmd):
             return
         arg_list = arg.split()
         class_name = arg_list[0]
-        if class_name not in ["BaseModel", "User"]:
+        if class_name == "State":
+            new_instance = State()
+        elif class_name == "City":
+            new_instance = City()
+        elif class_name == "Place":
+            new_instance = Place()
+        elif class_name == "Amenity":
+            new_instance = Amenity()
+        elif class_name == "Review":
+            new_instance = Review()
+        else:
             print("** class doesn't exist **")
             return
-        new_instance = eval("{}()".format(class_name))
         new_instance.save()
         print(new_instance.id)
 
@@ -65,7 +81,7 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
         else:
             print("** no instance found **")
-
+    
     def do_all(self, arg):
         """ Show all instances """
         all_objs = storage.all()
@@ -78,9 +94,8 @@ class HBNBCommand(cmd.Cmd):
             if class_name not in ["BaseModel", "User"]:
                 print("** class doesn't exist **")
                 return
-            new_obj = obj.__class__.__name__
             for obj in all_objs.values():
-                if new_obj == class_name:
+                if obj.__class__.__name__ == class_name:
                     print(str(obj))
 
     def do_update(self, arg):
@@ -114,18 +129,13 @@ class HBNBCommand(cmd.Cmd):
         obj.save()
 
     def do_quit(self, arg):
-        """ Quit command to exit the program """
-        sys.exit()
+        """Quit command to exit the program."""
+        return True
 
     def do_EOF(self, arg):
-        """ EOF command to exit the program """
+        """EOF signal to exit the program."""
         print("")
         return True
 
-    def emptyline(self):
-        """ Do nothing on empty input line """
-        pass
-
-
-if __name__ == '__main__':
+    if __name__ == "__main__":
     HBNBCommand().cmdloop()

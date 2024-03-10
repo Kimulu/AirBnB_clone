@@ -14,6 +14,7 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
+
 class HBNBCommand(cmd.Cmd):
     """ Command interpreter class """
     prompt = "(hbnb) "
@@ -81,7 +82,7 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
         else:
             print("** no instance found **")
-    
+
     def do_all(self, arg):
         """ Show all instances """
         all_objs = storage.all()
@@ -137,5 +138,6 @@ class HBNBCommand(cmd.Cmd):
         print("")
         return True
 
-    if __name__ == "__main__":
+
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
